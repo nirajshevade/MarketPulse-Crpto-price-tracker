@@ -99,3 +99,5 @@ jobs:
             -e EMAIL_FROM \
             -e EMAIL_TO \
             marketpulse:latest
+
+            
