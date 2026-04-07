@@ -1,0 +1,14 @@
+services:
+  marketpulse:
+    build: .
+    env_file:
+      - .env
+    command: python scripts/run_pipeline.py
+
+  streamlit:
+    build: .
+    env_file:
+      - .env
+    command: streamlit run streamlit_app.py --server.port=8501 --server.address=0.0.0.0
+    ports:
+      - "8501:8501"
