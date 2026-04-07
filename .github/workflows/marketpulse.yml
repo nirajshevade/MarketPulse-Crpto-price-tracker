@@ -11,9 +11,14 @@ on:
         default: false
         type: boolean
 
+concurrency:
+  group: marketpulse-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   run-pipeline:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     permissions:
       contents: write
 
@@ -48,22 +53,37 @@ jobs:
           EMAIL_TO: ${{ secrets.EMAIL_TO }}
         run: python scripts/run_pipeline.py
 
-      - name: Commit and push updates
+      - name: Detect generated changes
+        id: detect_changes
         run: |
+          if git status --porcelain README.md data charts | grep -q .; then
+            echo "has_changes=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_changes=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Commit and push updates
+        if: steps.detect_changes.outputs.has_changes == 'true'
+        run: |
+          set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add README.md data charts
-          if git diff --staged --quiet; then
-            echo "No changes to commit"
-          else
-            git commit -m "chore: update crypto snapshots and dashboard"
-            git push
-          fi
+          git commit -m "chore: update crypto snapshots and dashboard"
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
+
+      - name: No generated changes
+        if: steps.detect_changes.outputs.has_changes != 'true'
+        run: echo "No changes to commit"
 
   docker-run:
     if: ${{ github.event_name == 'workflow_dispatch' && inputs.run_with_docker == true }}
     runs-on: ubuntu-latest
     needs: run-pipeline
+    timeout-minutes: 20
+    permissions:
+      contents: read
 
     steps:
       - name: Checkout
@@ -100,4 +120,3 @@ jobs:
             -e EMAIL_TO \
             marketpulse:latest
 
-            
