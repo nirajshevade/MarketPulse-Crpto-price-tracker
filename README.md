@@ -4,7 +4,7 @@ Production-ready crypto tracker built with Python, Streamlit, and GitHub Actions
 
 ## Live Dashboard
 
-- Last updated (UTC): **2026-04-26T07:26:25+00:00**
+- Last updated (UTC): **2026-04-26T13:02:59+00:00**
 - Alert threshold: **+/-5.00%** run-to-run movement
 - Tracked coins: Bitcoin, Ethereum, Solana, Dogecoin
 
@@ -12,10 +12,10 @@ Production-ready crypto tracker built with Python, Streamlit, and GitHub Actions
 
 | Coin | Latest Price (USD) | 24h Change (CoinGecko) | Change Since Last Run |
 | --- | ---: | ---: | ---: |
-| Bitcoin | $78,026.0000 | +0.64% | +0.58% |
-| Ethereum | $2,330.6100 | +0.65% | +0.55% |
-| Solana | $86.5200 | +0.22% | +0.27% |
-| Dogecoin | $0.0986 | -0.13% | +0.73% |
+| Bitcoin | $77,849.0000 | +0.35% | -0.23% |
+| Ethereum | $2,330.2400 | +0.67% | -0.02% |
+| Solana | $86.0900 | -0.38% | -0.50% |
+| Dogecoin | $0.0987 | +0.83% | +0.10% |
 
 ### Price Trend Chart
 
