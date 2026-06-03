@@ -1601,5 +1601,12 @@
     "ethereum": 1820.66,
     "solana": 72.67,
     "dogecoin": 0.091056
+  },
+  {
+    "timestamp": "2026-06-03T10:54:53+00:00",
+    "bitcoin": 67113.0,
+    "ethereum": 1880.43,
+    "solana": 75.32,
+    "dogecoin": 0.094117
   }
 ]
